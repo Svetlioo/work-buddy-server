@@ -1,6 +1,5 @@
 package com.WorkBuddy.app.model.domain;
 
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
