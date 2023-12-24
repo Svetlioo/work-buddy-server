@@ -38,7 +38,6 @@ public class FileUploadController {
             @RequestParam(name = "hasHeader", defaultValue = "false") String hasHeader,
             @RequestParam(name = "storeFile", defaultValue = "false") String storeFile
     ) {
-        System.out.println("Received file: " + file.getOriginalFilename());
         List<ProjectWorkEntry> projects = csvReaderService.readCSV(file, hasHeader);
         employeeCollaborationService.setUploadedData(projects);
         if (storeFile.equalsIgnoreCase("true")) {
