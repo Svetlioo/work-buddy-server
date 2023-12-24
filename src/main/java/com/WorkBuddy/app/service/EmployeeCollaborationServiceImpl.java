@@ -7,15 +7,12 @@ import com.WorkBuddy.app.model.domain.CollaborationResult;
 import com.WorkBuddy.app.model.domain.ProjectCollaboration;
 import com.WorkBuddy.app.model.domain.ProjectWorkEntry;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
-@SessionScope
-// Without this session scope annotation the uploaded data from the previous user will be displayed to the next user that uses the app
 public class EmployeeCollaborationServiceImpl implements EmployeeCollaborationService<CollaborationResult, ProjectWorkEntry> {
 
     //  Here I save the uploaded data, so I do not have to read the csv file again when doing the calculations.
