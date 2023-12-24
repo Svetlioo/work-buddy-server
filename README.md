@@ -6,6 +6,8 @@ This application aims to identify pairs of employees collaborating on shared pro
 
 The application systematically analyzes collaborations between every pair of employees, exploring connections such as employee IDs 101 and 102, 101 and 103, 102 and 103, and so on. The primary focus remains on finding the longest collaborating pair of employees, emphasizing the uniqueness of the days they have worked together across these projects.
 
+The algorithm needs to ensure that only distinct days contribute to the overall count of collaboration days. It examines project timelines to identify potential overlaps, verifies whether employees are simultaneously engaged in multiple projects, and takes into account instances where employees initiate, pause, and then resume their contributions to a project.
+
 For each identified pair, the application provides detailed information about the collaborations, including projectID, duration, dateFrom and dateTo. This output format captures the exact details of the projects where the pair has collaborated. 
 
 The application also allows to create, read, update and delete employees.
@@ -30,6 +32,7 @@ The CSV file is designed for versatility, handling diverse scenarios. The applic
 
 - **Empty File:** Validates if the CSV file is empty.
 - **Correct Format:** Ensures that the inputted file is a CSV file and is in the correct CSV format.
+- **ISO Date Compatibility:** Supports all recognized ISO date formats for versatile date processing.
 - **File Size:** Checks if the file size is within acceptable limits, with a maximum size set at 10 MB.
 - **IO Exception:** Addresses potential input-output exceptions during the file processing.
 
@@ -53,7 +56,8 @@ GET /api/collaboration/all?sortOrder=desc
 - Parameters:
   - `sortOrder`: (optional) Specifies the sorting order of collaboration results. Default is set to descending (desc). Possible values: asc (ascending) or desc (descending).
 ---
-#### The same as the previous one, but also is a hashmap and every pair combinations is a value and its unique key is in the format of "employee1ID_employee2ID" for efficient data retrieval with average time efficiency of O(1).
+#### Similar to the previous description, this version incorporates a hashmap. Each pair combination serves as a value, with a unique key in the format "employee1ID_employee2ID." This design enhances data retrieval efficiency, aiming for an average time complexity of O(1).
+
 ```bash
 GET /api/collaboration/all/map
  ```
@@ -63,7 +67,8 @@ GET /api/collaboration/all/map
 GET /api/collaboration/{empID1}/{empID2}
  ```
 ---
-#### The main functionality of the application. This returns the pair of employees with the longest unique collaboration days and each of the projects they collaborated on with the id of the project, the duration in days that they worked together on that project, the from and to date. Only unique days are added to the total collaboration days. It checks if the projects are overlapping, if the employees are working on multiple projects at the same time, if the employees have started a project and then stopped doing it and then started doing it again. The algorithm is robust and accurate.
+#### This is the main function and it returns the pair of employees with the longest unique collaboration days, along with details for each project they collaborated on. The information includes the project ID, duration in days they worked together, and the start and end dates. Only unique days contribute to the total collaboration days. The algorithm checks for project overlaps, simultaneous involvement in multiple projects, and instances where employees start and stop a project before resuming. It is designed to be robust and accurate in its assessments.
+
 ```bash
 GET /api/collaboration/longest
  ```
@@ -80,7 +85,7 @@ GET /api/collaboration/longest
 103, 2, 2023-01-01, NULL
 ```
 
-### Output Data Example for /collaborations/longest
+### Output Data Example for /collaborations/longest (Date now is 2023-12-23)
 
 ```json
 {
@@ -206,7 +211,7 @@ PUT /api/employees/{id}
 - Sort collaboration results based on specified criteria (e.g., ascending or descending order).
 
 ### 5. Date Format Handling
-- Flexible handling of multiple date formats in the input data.
+- Supports all recognized ISO date formats.
 
 ### 6. NULL Date Handling
 - Treat NULL in the `DateTo` field as equivalent to today's date.
